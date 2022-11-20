@@ -9,5 +9,15 @@ export default defineConfig({
     preprocessorOptions: {
       less: {}
     }
+  },
+  // proxy
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://vup.loveava.top/',
+        changeOrigin: true
+        // rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })
