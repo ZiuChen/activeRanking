@@ -47,7 +47,7 @@ setInterval(async () => {
   display: flex;
   flex-flow: row wrap;
   align-content: flex-start;
-  width: 1100px;
+  width: 1180px;
 }
 .container {
   display: position;

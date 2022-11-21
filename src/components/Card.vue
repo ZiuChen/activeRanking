@@ -64,7 +64,7 @@ const externalLink = ({ type, id }) => {
   display: flex;
   flex-direction: column;
   width: 250px;
-  height: 250px;
+  height: 225px;
   // 边框
   border-radius: 2%;
   border-color: #d9d9d9;
@@ -95,6 +95,7 @@ const externalLink = ({ type, id }) => {
   .content {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     overflow: hidden;
     z-index: 1;
     height: 125px;
@@ -116,8 +117,8 @@ const externalLink = ({ type, id }) => {
       align-items: center;
       padding: 0px 10px;
       .face {
-        width: 55px;
-        height: 55px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         border-style: solid;
         border-width: 1px;
@@ -129,6 +130,8 @@ const externalLink = ({ type, id }) => {
         margin: 5px;
         .uname {
           color: @text-color;
+          font-size: 15px;
+          word-break: break-all;
           cursor: pointer;
           &:hover {
             color: @primary-color;
@@ -139,7 +142,6 @@ const externalLink = ({ type, id }) => {
           display: flex;
           align-items: center;
           width: fit-content;
-
           .counter-icon {
             width: 20px;
             height: 20px;
