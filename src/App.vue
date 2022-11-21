@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue'
-import Card from './components/Card.vue'
+import { ref, onMounted } from 'vue'
+import Card from '@/components/Card.vue'
 
 const roomList = ref([])
 
-setTimeout(async () => {
+onMounted(async () => {
   await fetch('api/rank100')
     .then((res) => res.json())
     .then((res) => {
@@ -13,17 +13,18 @@ setTimeout(async () => {
       })
       roomList.value = res.data.rooms
     })
-}, 0)
-setInterval(async () => {
-  await fetch('api/rank100')
-    .then((res) => res.json())
-    .then((res) => {
-      res.data.rooms.forEach((room) => {
-        room.face = room.face + '@55w_55h'
+  // 每10000ms更新数据
+  setInterval(async () => {
+    await fetch('api/rank100')
+      .then((res) => res.json())
+      .then((res) => {
+        res.data.rooms.forEach((room) => {
+          room.face = room.face + '@55w_55h'
+        })
+        roomList.value = res.data.rooms
       })
-      roomList.value = res.data.rooms
-    })
-}, 10000)
+  }, 10000)
+})
 </script>
 
 <template>

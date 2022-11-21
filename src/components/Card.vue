@@ -21,8 +21,9 @@ const externalLink = ({ type, id }) => {
     <img
       class="cover"
       @click="externalLink({ type: 'rid', id: roomData.roomid })"
-      :src="roomData.cover"
-      alt="直播间封面"
+      src="../assets/loading.svg"
+      v-lazy="roomData.cover"
+      alt="cover"
       crossOrigin="anonymous"
     />
 
@@ -34,8 +35,9 @@ const externalLink = ({ type, id }) => {
         <img
           class="face"
           @click="externalLink({ type: 'uid', id: roomData.uid })"
-          :src="roomData.face"
-          alt="头像"
+          src="../assets/loading.svg"
+          v-lazy="roomData.face"
+          alt="face"
         />
         <div class="detail">
           <div class="uname" @click="externalLink({ type: 'uid', id: roomData.uid })">
