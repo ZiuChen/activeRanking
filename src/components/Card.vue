@@ -11,38 +11,41 @@ const externalLink = ({ type, id }) => {
     uid: 'https://space.bilibili.com/' + id,
     rid: 'https://live.bilibili.com/' + id
   }
-  const targetLink = linkMap[type]
-  window.open(targetLink)
+  return linkMap[type]
 }
 </script>
 
 <template>
   <div class="card">
-    <img
-      class="cover"
-      @click="externalLink({ type: 'rid', id: roomData.roomid })"
-      src="../assets/loading.svg"
-      v-lazy="roomData.cover"
-      alt="cover"
-      crossOrigin="anonymous"
-    />
+    <a :href="externalLink({ type: 'rid', id: roomData.roomid })" target="_blank">
+      <img
+        class="cover"
+        src="../assets/loading.svg"
+        v-lazy="roomData.cover"
+        alt="cover"
+        crossOrigin="anonymous"
+      />
+    </a>
 
     <div class="content">
-      <div class="title" @click="externalLink({ type: 'rid', id: roomData.roomid })">
-        {{ roomData.title }}
-      </div>
+      <a :href="externalLink({ type: 'rid', id: roomData.roomid })" target="_blank">
+        <div class="title">
+          {{ roomData.title }}
+        </div>
+      </a>
+
       <div class="info">
-        <img
-          class="face"
-          @click="externalLink({ type: 'uid', id: roomData.uid })"
-          src="../assets/loading.svg"
-          v-lazy="roomData.face"
-          alt="face"
-        />
+        <a :href="externalLink({ type: 'uid', id: roomData.uid })" target="_blank">
+          <img class="face" src="../assets/loading.svg" v-lazy="roomData.face" alt="face" />
+        </a>
+
         <div class="detail">
-          <div class="uname" @click="externalLink({ type: 'uid', id: roomData.uid })">
-            {{ roomData.uname }}
-          </div>
+          <a :href="externalLink({ type: 'uid', id: roomData.uid })" target="_blank">
+            <div class="uname">
+              {{ roomData.uname }}
+            </div>
+          </a>
+
           <div class="counter">
             <img class="counter-icon" src="../assets/account.svg" alt="icon" />
             <span class="counter-span">{{ roomData.ten_minutes_counter }}</span>
@@ -103,7 +106,7 @@ const externalLink = ({ type, id }) => {
     height: 125px;
     .title {
       font-weight: bolder;
-      padding: 10px;
+      padding: 10px 10px 5px 10px;
       background-color: @bg-color;
       overflow: hidden;
       text-overflow: ellipsis;
