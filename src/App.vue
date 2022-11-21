@@ -51,13 +51,21 @@ onMounted(async () => {
         </a-col>
       </a-row>
     </a-spin>
-    <a-page-footer style="text-align: center">
-      <br />
-      技术支持 <br />
-      前端：<a href="https://github.com/ZiuChen" target="_blank">@ZiuChen</a>
-      <br />
-      后端：<a href="https://github.com/XiaoMiku01" target="_blank">@XiaoMiku01</a>
-    </a-page-footer>
+    <a-layout-footer class="footer" style="text-align: center">
+      <a-tag>技术支持</a-tag>
+      <a href="https://github.com/ZiuChen">
+        <img
+          src="https://img.shields.io/github/stars/ZiuChen?label=ZiuChen&logo=Github"
+          alt="badge"
+        />
+      </a>
+      <a href="https://github.com/XiaoMiku01">
+        <img
+          src="https://img.shields.io/github/stars/XiaoMiku01?label=XiaoMiku01&logo=Github"
+          alt="badge"
+        />
+      </a>
+    </a-layout-footer>
   </div>
 </template>
 
