@@ -41,7 +41,7 @@ const externalLink = ({ type, id }) => {
             class="face"
             src="../assets/loading.svg"
             v-lazy="roomData.face"
-            :title="roomData.title"
+            :title="roomData.uname"
             alt="face"
           />
         </a>
