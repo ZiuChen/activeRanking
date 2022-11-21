@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { message } from 'ant-design-vue'
+import 'ant-design-vue/es/message/style/css'
 import Card from '@/components/Card.vue'
 
 const roomList = ref([])
 
-onMounted(async () => {
-  await fetch('api/rank100')
+const fetchData = async () => {
+  return fetch('api/rank100')
     .then((res) => res.json())
     .then((res) => {
       res.data.rooms.forEach((room) => {
@@ -13,16 +15,16 @@ onMounted(async () => {
       })
       roomList.value = res.data.rooms
     })
+    .then(() => {
+      message.success('数据已更新 ' + new Date().toLocaleTimeString())
+    })
+}
+
+onMounted(async () => {
+  await fetchData()
   // 每10000ms更新数据
   setInterval(async () => {
-    await fetch('api/rank100')
-      .then((res) => res.json())
-      .then((res) => {
-        res.data.rooms.forEach((room) => {
-          room.face = room.face + '@55w_55h'
-        })
-        roomList.value = res.data.rooms
-      })
+    await fetchData()
   }, 10000)
 })
 </script>
