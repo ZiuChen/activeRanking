@@ -34,7 +34,7 @@ onMounted(async () => {
   </div>
   <div class="app">
     <div class="overlay">
-      <Card v-for="r of roomList" :roomData="r"></Card>
+      <Card v-for="r of roomList" :key="r.roomid" :roomData="r"></Card>
     </div>
   </div>
 </template>
