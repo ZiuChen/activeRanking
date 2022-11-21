@@ -41,7 +41,7 @@ onMounted(async () => {
       sub-title="互动包括：弹幕、SC、礼物、舰长"
     >
       <template #extra>
-        <a-tag>{{ lastUpdateTime }}</a-tag>
+        <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
       </template>
     </a-page-header>
     <a-spin :spinning="isLoading">
@@ -51,6 +51,13 @@ onMounted(async () => {
         </a-col>
       </a-row>
     </a-spin>
+    <a-page-footer style="text-align: center">
+      <br />
+      技术支持 <br />
+      前端：<a href="https://github.com/ZiuChen" target="_blank">@ZiuChen</a>
+      <br />
+      后端：<a href="https://github.com/XiaoMiku01" target="_blank">@XiaoMiku01</a>
+    </a-page-footer>
   </div>
 </template>
 
