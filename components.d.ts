@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ASpin: typeof import('ant-design-vue/es')['Spin']
     Card: typeof import('./src/components/Card.vue')['default']
   }
 }

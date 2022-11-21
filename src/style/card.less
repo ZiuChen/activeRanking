@@ -95,6 +95,9 @@
           cursor: pointer;
           &:hover {
             color: @primary-color !important;
+            // 将之前的svg移出页面 添加新颜色的阴影
+            filter: drop-shadow(1000px 0 0 @primary-color);
+            transform: translate(-1000px);
           }
           .counter-icon {
             width: 20px;
