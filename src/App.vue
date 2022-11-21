@@ -1,17 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Row, Col, Spin } from 'ant-design-vue'
 import useMessage from '@/hooks/useMessage'
 import Card from '@/components/Card.vue'
 
 const message = useMessage()
 
-message.config({
-  duration: 2,
-  maxCount: 3
-})
-
 const roomList = ref([])
+const lastUpdateTime = ref('')
 const isLoading = ref(true)
 
 const fetchData = async () => {
@@ -22,9 +17,10 @@ const fetchData = async () => {
         room.face = room.face + '@55w_55h'
       })
       roomList.value = res.data.rooms
+      lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
     })
-    .then(() => {
-      message.success('数据已更新 ' + new Date().toLocaleTimeString())
+    .catch(() => {
+      message.error('数据请求出错')
     })
 }
 
@@ -39,10 +35,15 @@ onMounted(async () => {
 
 <template>
   <div class="app">
-    <div class="container">
-      <h1 class="title">虚拟区10分钟互动人数排行前百</h1>
-      <p class="description">互动包括：弹幕、SC、礼物、舰长</p>
-    </div>
+    <a-page-header
+      style="margin: 10px; width: 100%"
+      title="虚拟区10分钟互动人数排行前百"
+      sub-title="互动包括：弹幕、SC、礼物、舰长"
+    >
+      <template #extra>
+        <a-tag>{{ lastUpdateTime }}</a-tag>
+      </template>
+    </a-page-header>
     <a-spin :spinning="isLoading">
       <a-row justify="center" :gutter="[15, 15]">
         <a-col :span="4.8" v-for="r of roomList" :key="r.roomid">
@@ -53,6 +54,6 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 @import './style/app.less';
 </style>
