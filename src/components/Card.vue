@@ -1,7 +1,12 @@
 <script setup>
+import { computed } from 'vue'
 const props = defineProps({
   roomData: {
     type: Object,
+    required: true
+  },
+  showFrame: {
+    type: Boolean,
     required: true
   }
 })
@@ -13,6 +18,11 @@ const externalLink = ({ type, id }) => {
   }
   return linkMap[type]
 }
+
+const coverLink = computed(() => {
+  const { cover, system_cover } = props.roomData
+  return props.showFrame ? system_cover : cover
+})
 </script>
 
 <template>
@@ -21,7 +31,7 @@ const externalLink = ({ type, id }) => {
       <img
         class="cover"
         src="../assets/loading.svg"
-        v-lazy="roomData.cover"
+        v-lazy="coverLink"
         :title="roomData.title"
         alt="cover"
         crossOrigin="anonymous"

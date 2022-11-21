@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     APageHeader: typeof import('ant-design-vue/es')['PageHeader']
     ARow: typeof import('ant-design-vue/es')['Row']
     ASpin: typeof import('ant-design-vue/es')['Spin']
+    ASwitch: typeof import('ant-design-vue/es')['Switch']
     ATag: typeof import('ant-design-vue/es')['Tag']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
     Card: typeof import('./src/components/Card.vue')['default']

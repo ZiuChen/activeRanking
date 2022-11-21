@@ -10,6 +10,12 @@ const directives = (app) => {
     beforeMount(el, binding) {
       el.setAttribute('lazy', binding.value) // 跟上面的对应
       lazySrc.observer.observe(el)
+    },
+    beforeUpdate(el, binding, vnode, prevVnode) {
+      if (binding.value !== prevVnode.value) {
+        el.setAttribute('lazy', binding.value)
+        lazySrc.observer.observe(el)
+      }
     }
   })
 }

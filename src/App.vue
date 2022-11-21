@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import useMessage from '@/hooks/useMessage'
 import Card from '@/components/Card.vue'
 
@@ -31,6 +31,12 @@ onMounted(async () => {
     await fetchData()
   }, 10000)
 })
+
+// true: 关键帧; false: 封面图;
+const showFrame = ref(false)
+watch(showFrame, (val) => {
+  message.success(val ? '已切换至关键帧' : '已切换至封面图')
+})
 </script>
 
 <template>
@@ -42,12 +48,16 @@ onMounted(async () => {
     >
       <template #extra>
         <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
+        <span>
+          <a-tag>{{ showFrame ? '关键帧' : '封面图' }}</a-tag>
+          <a-switch v-model:checked="showFrame" />
+        </span>
       </template>
     </a-page-header>
     <a-spin :spinning="isLoading">
       <a-row justify="center" :gutter="[15, 15]">
         <a-col :span="4.8" v-for="r of roomList" :key="r.roomid">
-          <Card :roomData="r"></Card>
+          <Card :roomData="r" :showFrame="showFrame"></Card>
         </a-col>
       </a-row>
     </a-spin>
