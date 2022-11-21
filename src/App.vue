@@ -1,8 +1,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { message } from 'ant-design-vue'
-import 'ant-design-vue/es/message/style/css'
+import useMessage from '@/hooks/useMessage'
 import Card from '@/components/Card.vue'
+
+const message = useMessage()
+
+message.config({
+  duration: 2,
+  maxCount: 3
+})
 
 const roomList = ref([])
 

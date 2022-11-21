@@ -80,6 +80,9 @@
           font-size: 15px;
           word-break: break-all;
           cursor: pointer;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
           &:hover {
             color: @primary-color;
             transition: all 0.15s;
@@ -89,6 +92,10 @@
           display: flex;
           align-items: center;
           width: fit-content;
+          cursor: pointer;
+          &:hover {
+            color: @primary-color !important;
+          }
           .counter-icon {
             width: 20px;
             height: 20px;

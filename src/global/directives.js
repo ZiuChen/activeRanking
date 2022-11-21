@@ -3,8 +3,7 @@ import lazyLoad from '@/utils/lazyLoad'
 const directives = (app) => {
   /** 添加一个加载`src`的指令 */
   const lazySrc = lazyLoad({
-    lazyAttr: 'lazy',
-    errorPath: './img/error.jpg'
+    lazyAttr: 'lazy'
   })
 
   app.directive('lazy', {
