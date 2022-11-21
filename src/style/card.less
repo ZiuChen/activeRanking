@@ -33,10 +33,10 @@
     height: 125px;
     z-index: 0; // 放大时将被.content遮挡
     cursor: pointer;
+    transition: all 0.15s;
     &:hover {
       transform: scale(1.05);
       transform-origin: top;
-      transition: all 0.15s;
     }
   }
   .content {
@@ -54,9 +54,9 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       cursor: pointer;
+      transition: all 0.15s;
       &:hover {
         color: @primary-color;
-        transition: all 0.15s;
       }
     }
     .info {
@@ -83,9 +83,9 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+          transition: all 0.15s;
           &:hover {
             color: @primary-color;
-            transition: all 0.15s;
           }
         }
         .counter {
@@ -93,12 +93,7 @@
           align-items: center;
           width: fit-content;
           cursor: pointer;
-          &:hover {
-            color: @primary-color !important;
-            // 将之前的svg移出页面 添加新颜色的阴影
-            filter: drop-shadow(1000px 0 0 @primary-color);
-            transform: translate(-1000px);
-          }
+
           .counter-icon {
             width: 20px;
             height: 20px;
@@ -106,6 +101,9 @@
           .counter-span {
             font-size: 14px;
             color: @text-color-lighter;
+            &:hover {
+              color: @primary-color !important;
+            }
           }
         }
       }
