@@ -7,6 +7,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ACol: typeof import('ant-design-vue/es')['Col']
+    ARow: typeof import('ant-design-vue/es')['Row']
     ASpin: typeof import('ant-design-vue/es')['Spin']
     Card: typeof import('./src/components/Card.vue')['default']
   }

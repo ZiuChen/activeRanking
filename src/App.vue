@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Spin } from 'ant-design-vue'
+import { Row, Col, Spin } from 'ant-design-vue'
 import useMessage from '@/hooks/useMessage'
 import Card from '@/components/Card.vue'
 
@@ -44,9 +44,11 @@ onMounted(async () => {
       <p class="description">互动包括：弹幕、SC、礼物、舰长</p>
     </div>
     <a-spin :spinning="isLoading">
-      <div class="overlay">
-        <Card v-for="r of roomList" :key="r.roomid" :roomData="r"></Card>
-      </div>
+      <a-row justify="center" :gutter="[15, 15]">
+        <a-col :span="4.8" v-for="r of roomList" :key="r.roomid">
+          <Card :roomData="r"></Card>
+        </a-col>
+      </a-row>
     </a-spin>
   </div>
 </template>
