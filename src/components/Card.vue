@@ -8,6 +8,10 @@ const props = defineProps({
   showFrame: {
     type: Boolean,
     required: true
+  },
+  rank: {
+    type: Number,
+    required: true
   }
 })
 
@@ -23,9 +27,26 @@ const coverLink = computed(() => {
   const { cover, system_cover } = props.roomData
   return props.showFrame ? system_cover : cover
 })
+
+const rankColorMap = {
+  0: 'red',
+  1: 'volcano',
+  2: 'purple'
+}
+
+const rankInfo = computed(() => ({
+  text: `${props.rank + 1}`,
+  color: rankColorMap[props.rank] !== undefined ? rankColorMap[props.rank] : 'grey'
+}))
 </script>
 
 <template>
+  <a-badge-ribbon
+    :text="rankInfo.text"
+    :color="rankInfo.color"
+    placement="start"
+    style="z-index: 1"
+  />
   <div class="card">
     <a :href="externalLink({ type: 'rid', id: roomData.roomid })" target="_blank">
       <img
@@ -39,6 +60,8 @@ const coverLink = computed(() => {
     </a>
 
     <div class="content">
+      <div :class="{ ranking: true }"></div>
+
       <a :href="externalLink({ type: 'rid', id: roomData.roomid })" target="_blank">
         <div class="title" :title="roomData.title">
           {{ roomData.title }}

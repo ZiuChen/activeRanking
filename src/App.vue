@@ -58,8 +58,8 @@ watch(showFrame, (val) => {
     <div class="ranking-table">
       <a-spin v-if="isLoading" :spinning="isLoading" />
       <a-row justify="center" :gutter="[15, 15]">
-        <a-col :span="4.8" v-for="r of roomList" :key="r.roomid">
-          <Card :roomData="r" :showFrame="showFrame"></Card>
+        <a-col :span="4.8" v-for="(room, index) in roomList" :key="room.roomid">
+          <Card :roomData="room" :showFrame="showFrame" :rank="index"></Card>
         </a-col>
       </a-row>
     </div>
