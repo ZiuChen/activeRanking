@@ -42,7 +42,8 @@ watch(showFrame, (val) => {
 <template>
   <div class="app">
     <a-page-header
-      style="margin: 10px; width: 100%"
+      :ghost="false"
+      style="width: 100%"
       title="虚拟区10分钟互动人数排行前百"
       sub-title="互动包括：弹幕、SC、礼物、舰长"
     >
@@ -54,13 +55,15 @@ watch(showFrame, (val) => {
         </span>
       </template>
     </a-page-header>
-    <a-spin :spinning="isLoading">
+    <div class="ranking-table">
+      <a-spin v-if="isLoading" :spinning="isLoading" />
       <a-row justify="center" :gutter="[15, 15]">
         <a-col :span="4.8" v-for="r of roomList" :key="r.roomid">
           <Card :roomData="r" :showFrame="showFrame"></Card>
         </a-col>
       </a-row>
-    </a-spin>
+    </div>
+
     <a-layout-footer class="footer" style="text-align: center">
       <a-tag>技术支持</a-tag>
       <a href="https://github.com/ZiuChen">

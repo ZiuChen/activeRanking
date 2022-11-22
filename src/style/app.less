@@ -5,12 +5,21 @@
   align-items: center;
   overflow: hidden;
 }
-.ant-page-header .ant-page-header-heading {
-  align-items: center;
-  margin: 0px 20px;
+.ant-page-header {
+  position: fixed;
+  top: 0px;
+  z-index: 2;
+  backdrop-filter: saturate(50%) blur(8px);
+  background: rgba(255, 255, 255, 0.7);
+  .ant-page-header-heading {
+    align-items: center;
+    .ant-page-header-heading-extra > * {
+      margin: 0px 5px;
+    }
+  }
 }
-.ant-page-header-heading-extra > * {
-  margin: 0px 5px;
+.ranking-table {
+  margin-top: 90px;
 }
 .footer * {
   margin: 0px 2px;
