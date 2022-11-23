@@ -55,11 +55,12 @@ const handleChartClick = async () => {
     icon: h('li'),
     content: h(
       'div',
-      { style: 'display: flex; justify-content: center; align-items: center; height: 200px' },
-      h(Spin, { spinning: true })
+      { style: 'display: flex; justify-content: center; align-items: center; height: 300px' },
+      h(Spin, { spinning: true, tip: '我知道你很急, 但你先别急' })
     ),
     okButtonProps: { style: 'display: none' }, // 隐藏footer按钮
     width: '85%',
+    closable: true,
     wrapClassName: 'full-modal',
     maskClosable: true
   })
@@ -70,6 +71,7 @@ const handleChartClick = async () => {
   const echarts = useEcharts({
     id: 'interactive-history-chart',
     title: '历史互动人数: ' + props.roomData.title,
+    subText: '开播时间: ' + new Date(props.roomData.start_time * 1000).toLocaleString(),
     data: data
   })
 

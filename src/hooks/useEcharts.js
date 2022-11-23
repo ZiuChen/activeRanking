@@ -1,19 +1,28 @@
 import { h } from 'vue'
 import ECharts from '@/components/ECharts.vue'
 
-const useEcharts = ({ id, title, data }) => {
+const useEcharts = ({ id, title, subText, data }) => {
   return h(ECharts, {
     eChartsId: id,
     eChartsOption: {
       tooltip: {
         trigger: 'axis',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
         position: function (pt) {
           return [pt[0], '10%']
-        }
+        },
+        feature: {
+          dataZoom: {
+            yAxisIndex: 'none'
+          },
+          restore: {}
+        },
+        extraCssText: 'width: 170px'
       },
       title: {
         left: 'center',
-        text: title
+        text: title || '',
+        subtext: subText || ''
       },
       toolbox: {
         feature: {
@@ -26,11 +35,16 @@ const useEcharts = ({ id, title, data }) => {
       },
       xAxis: {
         type: 'time',
-        boundaryGap: false
+        boundaryGap: false,
+        axisPointer: {
+          snap: true
+        }
       },
       yAxis: {
         type: 'value',
-        boundaryGap: [0, '100%']
+        axisTick: {
+          inside: true
+        }
       },
       dataZoom: [
         {
@@ -48,7 +62,8 @@ const useEcharts = ({ id, title, data }) => {
           name: '互动人数',
           type: 'line',
           smooth: true,
-          symbol: 'none',
+          symbol: 'circle',
+          symbolSize: 5,
           areaStyle: {},
           data: data
         }
