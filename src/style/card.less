@@ -83,22 +83,31 @@
             color: @primary-color;
           }
         }
-        .counter {
+        .status {
           display: flex;
           align-items: center;
           width: fit-content;
           cursor: pointer;
-
-          .counter-icon {
-            width: 20px;
-            height: 20px;
+          & > * {
+            margin-right: 5px;
           }
-          .counter-span {
-            font-size: 14px;
-            color: @text-color-lighter;
-            &:hover {
-              color: @primary-color !important;
+          .counter {
+            display: flex;
+            align-items: center;
+            &-icon {
+              width: 20px;
+              height: 20px;
             }
+            &-span {
+              font-size: 14px;
+              color: @text-color-lighter;
+              &:hover {
+                color: @primary-color !important;
+              }
+            }
+          }
+          .chart {
+            .counter(); // 复用counter样式
           }
         }
       }

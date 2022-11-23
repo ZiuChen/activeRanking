@@ -18,5 +18,7 @@ declare module '@vue/runtime-core' {
     ATag: typeof import('ant-design-vue/es')['Tag']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
     Card: typeof import('./src/components/Card.vue')['default']
+    EChart: typeof import('./src/components/EChart.vue')['default']
+    ECharts: typeof import('./src/components/ECharts.vue')['default']
   }
 }

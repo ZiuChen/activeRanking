@@ -1,5 +1,9 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, h } from 'vue'
+import { Spin } from 'ant-design-vue'
+import useEcharts from '@/hooks/useEcharts'
+import useModal from '@/hooks/useModal'
+
 const props = defineProps({
   roomData: {
     type: Object,
@@ -14,6 +18,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const Modal = useModal()
 
 const externalLink = ({ type, id }) => {
   const linkMap = {
@@ -38,6 +44,39 @@ const rankInfo = computed(() => ({
   text: `${props.rank + 1}`,
   color: rankColorMap[props.rank] !== undefined ? rankColorMap[props.rank] : 'grey'
 }))
+
+const fetchChartData = async () => {
+  return fetch('api/history/' + props.roomData.roomid).then((res) => res.json())
+}
+
+const handleChartClick = async () => {
+  // 先展示Modal 后更新数据
+  const modal = Modal.info({
+    icon: h('li'),
+    content: h(
+      'div',
+      { style: 'display: flex; justify-content: center; align-items: center; height: 200px' },
+      h(Spin, { spinning: true })
+    ),
+    okButtonProps: { style: 'display: none' }, // 隐藏footer按钮
+    width: '85%',
+    wrapClassName: 'full-modal',
+    maskClosable: true
+  })
+
+  const data = await fetchChartData()
+  data.map((info) => (info[0] *= 1000)) // 秒时间戳 转 毫秒时间戳
+
+  const echarts = useEcharts({
+    id: 'interactive-history-chart',
+    title: '历史互动人数: ' + props.roomData.title,
+    data: data
+  })
+
+  modal.update({
+    content: echarts
+  })
+}
 </script>
 
 <template>
@@ -86,9 +125,15 @@ const rankInfo = computed(() => ({
             </div>
           </a>
 
-          <div class="counter" title="互动人数">
-            <img class="counter-icon" src="../assets/account.svg" alt="icon" />
-            <span class="counter-span">{{ roomData.ten_minutes_counter }}</span>
+          <div class="status">
+            <div class="counter" title="互动人数">
+              <img class="counter-icon" src="../assets/account.svg" alt="icon" />
+              <span class="counter-span">{{ roomData.ten_minutes_counter }}</span>
+            </div>
+            <div class="chart" title="历史人数" @click="handleChartClick">
+              <img class="chart-icon" src="../assets/chart-line.svg" alt="icon" />
+              <span class="chart-span">历史人数</span>
+            </div>
           </div>
         </div>
       </div>
