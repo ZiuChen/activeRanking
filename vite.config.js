@@ -29,6 +29,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://vup.loveava.top/',
+        // target: 'http://127.0.0.1:655/',
         changeOrigin: true
         // rewrite: (path) => path.replace(/^\/api/, '')
       }
