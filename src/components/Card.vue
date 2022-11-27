@@ -132,7 +132,7 @@ const handleChartClick = async () => {
               <img class="counter-icon" src="../assets/account.svg" alt="icon" />
               <span class="counter-span">{{ roomData.ten_minutes_counter }}</span>
             </div>
-            <div class="counter" title="当前互动人数">
+            <div class="counter" title="B站高能榜">
               <img class="counter-icon" src="../assets/hot-fill.svg" alt="icon" />
               <span class="counter-span">{{ roomData.count }}</span>
             </div>
