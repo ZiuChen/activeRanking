@@ -9,6 +9,24 @@ const roomList = ref([])
 const lastUpdateTime = ref('')
 const isLoading = ref(true)
 
+// 按不同规则排序
+const sortConditions = [
+  {
+    id: 'ten_minutes_counter',
+    name: '10分钟互动人数'
+  },
+  {
+    id: 'count',
+    name: '当前互动人数'
+  }
+]
+const sortBy = ref(sortConditions[0])
+const handleMenuClick = (ev) => {
+  const { key } = ev
+  sortBy.value = sortConditions.filter((s) => s.id === key)[0]
+  roomList.value = roomList.value.sort((a, b) => b[key] - a[key])
+}
+
 const fetchData = async () => {
   return fetch('api/rank100')
     .then((res) => res.json())
@@ -16,10 +34,12 @@ const fetchData = async () => {
       res.data.rooms.forEach((room) => {
         room.face = room.face + '@55w_55h'
       })
-      roomList.value = res.data.rooms
+      const key = sortBy.value.id
+      roomList.value = res.data.rooms.sort((a, b) => b[key] - a[key]) // 每次请求数据 都按照当前排序规则重新排序
       lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       message.error('数据请求出错')
     })
 }
@@ -47,12 +67,24 @@ watch(showFrame, (val) => {
       title="虚拟区10分钟互动人数排行前百"
       sub-title="互动包括：弹幕、SC、礼物、舰长"
     >
+      <template #tags>
+        <a-tag>更新时间 {{ lastUpdateTime }}</a-tag>
+      </template>
       <template #extra>
-        <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
-        <span>
-          <a-tag>{{ showFrame ? '关键帧' : '封面图' }}</a-tag>
-          <a-switch v-model:checked="showFrame" />
-        </span>
+        <a-dropdown>
+          <template #overlay>
+            <a-menu @click="handleMenuClick">
+              <template v-for="c of sortConditions" :key="c.id">
+                <a-menu-item>{{ c.name }}</a-menu-item>
+              </template>
+            </a-menu>
+          </template>
+          <a-dropdown-button size="small">
+            {{ sortBy.name }}
+          </a-dropdown-button>
+        </a-dropdown>
+        {{ showFrame ? '关键帧' : '封面图' }}
+        <a-switch size="small" v-model:checked="showFrame" />
       </template>
     </a-page-header>
     <div class="ranking-table">
