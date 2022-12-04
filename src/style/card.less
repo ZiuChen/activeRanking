@@ -28,9 +28,9 @@
     height: 125px;
     z-index: 0; // 放大时将被.content遮挡
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s 0.05s;
     &:hover {
-      transform: scale(1.15);
+      transform: scale(1.1);
     }
   }
   .content {
@@ -49,7 +49,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.2s 0.05s;
       &:hover {
         color: @primary-color;
       }
@@ -78,7 +78,7 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          transition: all 0.15s;
+          transition: all 0.2s 0.05s;
           &:hover {
             color: @primary-color;
           }
