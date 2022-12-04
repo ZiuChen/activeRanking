@@ -22,8 +22,4 @@ const router = createRouter({
   history: createWebHistory()
 })
 
-router.beforeEach((to) => {
-  console.log(to)
-})
-
 export default router
