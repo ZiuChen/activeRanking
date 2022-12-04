@@ -26,6 +26,7 @@ const fetchData = async () => {
   return fetch('api/as/rank?by=online')
     .then((res) => res.json())
     .then((res) => {
+      console.log(res.data.list)
       list.value = res.data.list
       lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
     })
