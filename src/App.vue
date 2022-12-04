@@ -44,7 +44,7 @@ const route = useRoute()
 const linkList = [
   {
     key: 'ranking',
-    name: '互动人数排行',
+    name: '虚拟区互动人数排行',
     title: '虚拟区10分钟互动人数排行前百',
     desc: '互动包括：弹幕、SC、礼物、舰长'
   },

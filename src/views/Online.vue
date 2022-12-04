@@ -27,6 +27,9 @@ const fetchData = async () => {
     .then((res) => res.json())
     .then((res) => {
       console.log(res.data.list)
+      res.data.list.forEach((item) => {
+        item.owner.face = item.owner.face + '@55w_55h'
+      })
       list.value = res.data.list
       lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
     })

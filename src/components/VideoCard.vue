@@ -118,7 +118,7 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
               }}</span>
             </div>
             <div class="counter" title="投币">
-              <img class="counter-icon" src="../assets/thumb-up.svg" alt="icon" />
+              <img class="counter-icon" src="../assets/coin.svg" alt="icon" />
               <span class="counter-span">{{ videoData.stat.coin }}</span>
             </div>
           </div>
@@ -139,7 +139,7 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
   justify-content: space-between;
   align-items: center;
 
-  z-index: 99;
+  z-index: 1;
   color: #fff;
   background-image: linear-gradient(360deg, black, transparent);
 
