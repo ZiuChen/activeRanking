@@ -101,8 +101,6 @@ const handleChartClick = async () => {
     </a>
 
     <div class="content">
-      <div :class="{ ranking: true }"></div>
-
       <a :href="externalLink({ type: 'rid', id: roomData.roomid })" target="_blank">
         <div class="title" :title="roomData.title">
           {{ roomData.title }}
