@@ -1,0 +1,23 @@
+.full-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ant-modal {
+    max-width: 100%;
+    top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+  .ant-modal-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 8%; // 固定宽高比
+  }
+  .ant-modal-body {
+    flex: 1;
+    .ant-modal-confirm-content {
+      height: 100%;
+    }
+  }
+}

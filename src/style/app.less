@@ -1,9 +1,12 @@
-.app {
+#app {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  .main {
+    margin-top: 90px;
+  }
 }
 .ant-page-header {
   position: fixed;
@@ -12,38 +15,20 @@
   backdrop-filter: saturate(50%) blur(8px);
   background: rgba(255, 255, 255, 0.7);
   .ant-page-header-heading {
-    align-items: center;
-    .ant-page-header-heading-extra > * {
-      margin: 0px 5px;
+    .ant-page-header-heading-extra {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      // 移除底部默认的边框
+      .ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light {
+        border: 0;
+        background: transparent;
+        height: 100%;
+      }
     }
   }
-}
-.ranking-table {
-  margin-top: 90px;
 }
 .footer * {
   margin: 0px 2px;
-}
-.full-modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .ant-modal {
-    max-width: 100%;
-    top: 0;
-    padding-bottom: 0;
-    margin: 0;
-  }
-  .ant-modal-content {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding-bottom: 8%; // 固定宽高比
-  }
-  .ant-modal-body {
-    flex: 1;
-    .ant-modal-confirm-content {
-      height: 100%;
-    }
-  }
 }
