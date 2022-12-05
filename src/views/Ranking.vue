@@ -17,7 +17,7 @@
       <a-spin v-if="isLoading" :spinning="isLoading" />
       <a-row v-else justify="center" :gutter="[15, 15]">
         <a-col :span="4.8" v-for="(room, index) in roomList" :key="room.roomid">
-          <Card :roomData="room" :showFrame="showFrame" :rank="index"></Card>
+          <LiveCard :roomData="room" :showFrame="showFrame" :rank="index"></LiveCard>
         </a-col>
       </a-row>
     </div>
@@ -27,7 +27,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import useMessage from '@/hooks/useMessage'
-import Card from '@/components/Card.vue'
+import LiveCard from '@/components/LiveCard.vue'
 
 const message = useMessage()
 
