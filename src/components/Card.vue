@@ -21,7 +21,7 @@ const props = defineProps({
 })
 
 const Modal = useModal()
-const externalLink = useExternalLink()
+const [_, handleExternalLinkClick] = useExternalLink()
 
 const coverLink = computed(() => {
   const { cover, system_cover } = props.roomData
@@ -83,42 +83,39 @@ const handleChartClick = async () => {
     style="z-index: 1"
   />
   <div class="card">
-    <a :href="externalLink({ type: 'rid', id: roomData.roomid })" target="_blank">
-      <img
-        class="cover"
-        src="../assets/loading.svg"
-        v-lazy="coverLink"
-        :title="roomData.title"
-        alt="cover"
-        crossOrigin="anonymous"
-      />
-    </a>
-
+    <img
+      class="cover"
+      src="../assets/loading.svg"
+      v-lazy="coverLink"
+      :title="roomData.title"
+      @click="handleExternalLinkClick({ type: 'rid', id: roomData.roomid })"
+      alt="cover"
+    />
     <div class="content">
-      <a :href="externalLink({ type: 'rid', id: roomData.roomid })" target="_blank">
-        <div class="title" :title="roomData.title">
-          {{ roomData.title }}
-        </div>
-      </a>
-
+      <div
+        class="title"
+        :title="roomData.title"
+        @click="handleExternalLinkClick({ type: 'rid', id: roomData.roomid })"
+      >
+        {{ roomData.title }}
+      </div>
       <div class="info">
-        <a :href="externalLink({ type: 'uid', id: roomData.uid })" target="_blank">
-          <img
-            class="face"
-            src="../assets/loading.svg"
-            v-lazy="roomData.face"
-            :title="roomData.uname"
-            alt="face"
-          />
-        </a>
-
+        <img
+          class="face"
+          src="../assets/loading.svg"
+          v-lazy="roomData.face"
+          :title="roomData.uname"
+          @click="handleExternalLinkClick({ type: 'uid', id: roomData.uid })"
+          alt="face"
+        />
         <div class="detail">
-          <a :href="externalLink({ type: 'uid', id: roomData.uid })" target="_blank">
-            <div class="uname" :title="roomData.uname">
-              {{ roomData.uname }}
-            </div>
-          </a>
-
+          <div
+            class="uname"
+            :title="roomData.uname"
+            @click="handleExternalLinkClick({ type: 'uid', id: roomData.uid })"
+          >
+            {{ roomData.uname }}
+          </div>
           <div class="status">
             <div class="counter" title="10分钟互动人数">
               <img class="counter-icon" src="../assets/account.svg" alt="icon" />

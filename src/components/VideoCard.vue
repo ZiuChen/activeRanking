@@ -14,7 +14,7 @@ const props = defineProps({
   }
 })
 
-const externalLink = useExternalLink()
+const [_, handleExternalLinkClick] = useExternalLink()
 
 const coverLink = computed(() => {
   const { pic } = props.videoData
@@ -43,61 +43,58 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
     style="z-index: 1"
   />
   <div class="card">
-    <a :href="externalLink({ type: 'bvid', id: videoData.bvid })" target="_blank">
-      <img
-        class="cover"
-        src="../assets/loading.svg"
-        v-lazy="coverLink"
-        :title="videoData.title"
-        alt="cover"
-        crossOrigin="anonymous"
-      />
-      <div class="stat">
-        <div class="left">
-          <div class="counter" title="播放量">
-            <img class="counter-icon" src="../assets/play-box-outline.svg" alt="icon" />
-            <span class="counter-span">{{
-              videoData.stat.view > 10000
-                ? parseFloat(videoData.stat.view / 10000).toFixed(1) + 'w'
-                : videoData.stat.view
-            }}</span>
-          </div>
-          <div class="counter" title="弹幕数">
-            <img class="counter-icon" src="../assets/danmu.svg" alt="icon" />
-            <span class="counter-span">{{ videoData.stat.danmaku }}</span>
-          </div>
+    <img
+      class="cover"
+      src="../assets/loading.svg"
+      v-lazy="coverLink"
+      :title="videoData.title"
+      alt="cover"
+      @click="handleExternalLinkClick({ type: 'bvid', id: videoData.bvid })"
+    />
+    <div class="stat">
+      <div class="left">
+        <div class="counter" title="播放量">
+          <img class="counter-icon" src="../assets/play-box-outline.svg" alt="icon" />
+          <span class="counter-span">{{
+            videoData.stat.view > 10000
+              ? parseFloat(videoData.stat.view / 10000).toFixed(1) + 'w'
+              : videoData.stat.view
+          }}</span>
         </div>
-        <div class="counter" title="视频时长">
-          <span class="counter-span">{{ formattedDuration }}</span>
+        <div class="counter" title="弹幕数">
+          <img class="counter-icon" src="../assets/danmu.svg" alt="icon" />
+          <span class="counter-span">{{ videoData.stat.danmaku }}</span>
         </div>
       </div>
-    </a>
-
+      <div class="counter" title="视频时长">
+        <span class="counter-span">{{ formattedDuration }}</span>
+      </div>
+    </div>
     <div class="content">
-      <a :href="externalLink({ type: 'bvid', id: videoData.bvid })" target="_blank">
-        <div class="title" :title="videoData.title">
-          {{ videoData.title }}
-        </div>
-      </a>
-
+      <div
+        class="title"
+        :title="videoData.title"
+        @click="handleExternalLinkClick({ type: 'bvid', id: videoData.bvid })"
+      >
+        {{ videoData.title }}
+      </div>
       <div class="info">
-        <a :href="externalLink({ type: 'uid', id: videoData.owner.mid })" target="_blank">
-          <img
-            class="face"
-            src="../assets/loading.svg"
-            v-lazy="videoData.owner.face"
-            :title="videoData.uname"
-            alt="face"
-          />
-        </a>
-
+        <img
+          class="face"
+          src="../assets/loading.svg"
+          v-lazy="videoData.owner.face"
+          :title="videoData.uname"
+          alt="face"
+          @click="handleExternalLinkClick({ type: 'uid', id: videoData.owner.mid })"
+        />
         <div class="detail">
-          <a :href="externalLink({ type: 'uid', id: videoData.owner.mid })" target="_blank">
-            <div class="uname" :title="videoData.owner.name">
-              {{ videoData.owner.name }}
-            </div>
-          </a>
-
+          <div
+            class="uname"
+            :title="videoData.owner.name"
+            @click="handleExternalLinkClick({ type: 'uid', id: videoData.owner.mid })"
+          >
+            {{ videoData.owner.name }}
+          </div>
           <div class="status">
             <div class="counter" :title="videoData.total_number_text + '人正在观看'">
               <img class="counter-icon" src="../assets/account.svg" alt="icon" />

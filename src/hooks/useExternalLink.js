@@ -1,5 +1,5 @@
 const useExternalLink = () => {
-  return ({ type, id }) => {
+  const externalLink = ({ type, id }) => {
     const linkMap = {
       bvid: 'https://www.bilibili.com/video/' + id,
       rid: 'https://live.bilibili.com/' + id,
@@ -7,6 +7,13 @@ const useExternalLink = () => {
     }
     return linkMap[type]
   }
+  const handleExternalLinkClick = ({ type, id }) => {
+    const link = externalLink({ type, id })
+    if (link) {
+      window.open(link)
+    }
+  }
+  return [externalLink, handleExternalLinkClick]
 }
 
 export default useExternalLink
