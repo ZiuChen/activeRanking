@@ -26,7 +26,6 @@ const fetchData = async () => {
   return fetch('api/as/rank?by=online')
     .then((res) => res.json())
     .then((res) => {
-      console.log(res.data.list)
       res.data.list.forEach((item) => {
         item.owner.face = item.owner.face + '@55w_55h'
       })

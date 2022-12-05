@@ -3,6 +3,7 @@ import { computed, h } from 'vue'
 import { Spin } from 'ant-design-vue'
 import useEcharts from '@/hooks/useEcharts'
 import useModal from '@/hooks/useModal'
+import useExternalLink from '@/hooks/useExternalLink'
 
 const props = defineProps({
   roomData: {
@@ -20,14 +21,7 @@ const props = defineProps({
 })
 
 const Modal = useModal()
-
-const externalLink = ({ type, id }) => {
-  const linkMap = {
-    uid: 'https://space.bilibili.com/' + id,
-    rid: 'https://live.bilibili.com/' + id
-  }
-  return linkMap[type]
-}
+const externalLink = useExternalLink()
 
 const coverLink = computed(() => {
   const { cover, system_cover } = props.roomData

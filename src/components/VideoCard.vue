@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import formatSeconds from '@/utils/formatSeconds'
+import useExternalLink from '@/hooks/useExternalLink'
 
 const props = defineProps({
   videoData: {
@@ -13,14 +14,7 @@ const props = defineProps({
   }
 })
 
-const externalLink = ({ type, id }) => {
-  const linkMap = {
-    bvid: 'https://www.bilibili.com/video/' + id,
-    rid: 'https://www.bilibili.com/video/' + id,
-    uid: 'https://space.bilibili.com/' + id
-  }
-  return linkMap[type]
-}
+const externalLink = useExternalLink()
 
 const coverLink = computed(() => {
   const { pic } = props.videoData
@@ -80,7 +74,7 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
     </a>
 
     <div class="content">
-      <a :href="externalLink({ type: 'rid', id: videoData.bvid })" target="_blank">
+      <a :href="externalLink({ type: 'bvid', id: videoData.bvid })" target="_blank">
         <div class="title" :title="videoData.title">
           {{ videoData.title }}
         </div>
