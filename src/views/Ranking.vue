@@ -3,12 +3,12 @@
     <div v-if="!isLoading" class="ranking-operation">
       <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
       <span>
-        <a-button size="small" style="cursor: pointer" @click="() => (sortType = !sortType)">{{
+        <a-button size="small" style="cursor: pointer" @click="handleSortTypeChange">{{
           sortType ? sortMap[0].name : sortMap[1].name
         }}</a-button>
       </span>
       <span>
-        <a-button size="small" style="cursor: pointer" @click="() => (showFrame = !showFrame)">{{
+        <a-button size="small" style="cursor: pointer" @click="handleShowFrameChange">{{
           showFrame ? '关键帧' : '封面图'
         }}</a-button>
       </span>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import useMessage from '@/hooks/useMessage'
 import Card from '@/components/Card.vue'
 
@@ -63,11 +63,12 @@ const fetchData = async () => {
     })
 }
 
-watch(sortType, () => {
+const handleSortTypeChange = () => {
+  sortType.value = !sortType.value
   const key = sortType.value ? sortMap[0].id : sortMap[1].id
   roomList.value = roomList.value.sort((a, b) => b[key] - a[key])
   message.success(`已切换至${sortType.value ? sortMap[0].name : sortMap[1].name}`)
-})
+}
 
 onMounted(async () => {
   await fetchData().then(() => (isLoading.value = false))
@@ -79,9 +80,10 @@ onMounted(async () => {
 
 // true: 关键帧; false: 封面图;
 const showFrame = ref(false)
-watch(showFrame, () => {
+const handleShowFrameChange = () => {
+  showFrame.value = !showFrame.value
   message.success(showFrame.value ? '已切换至关键帧' : '已切换至封面图')
-})
+}
 </script>
 
 <style lang="less" scoped>
