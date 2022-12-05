@@ -16,7 +16,7 @@ const props = defineProps({
 const externalLink = ({ type, id }) => {
   const linkMap = {
     bvid: 'https://www.bilibili.com/video/' + id,
-    rid: 'https://live.bilibili.com/' + id,
+    rid: 'https://www.bilibili.com/video/' + id,
     uid: 'https://space.bilibili.com/' + id
   }
   return linkMap[type]

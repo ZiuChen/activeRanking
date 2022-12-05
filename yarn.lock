@@ -144,6 +144,11 @@
     "@vue/compiler-dom" "3.2.45"
     "@vue/shared" "3.2.45"
 
+"@vue/devtools-api@^6.4.5":
+  version "6.4.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@vue%2fdevtools-api/-/devtools-api-6.4.5.tgz#d54e844c1adbb1e677c81c665ecef1a2b4bb8380"
+  integrity sha512-JD5fcdIuFxU4fQyXUu3w2KpAJHzTVdN+p4iOX2lMWSHMOoQdMAcpFLZzm9Z/2nmsoZ1a96QEhZ26e50xLBsgOQ==
+
 "@vue/reactivity-transform@3.2.45":
   version "3.2.45"
   resolved "https://mirrors.cloud.tencent.com/npm/@vue%2freactivity-transform/-/reactivity-transform-3.2.45.tgz#07ac83b8138550c83dfb50db43cde1e0e5e8124d"
@@ -327,6 +332,14 @@ dom-scroll-into-view@^2.0.0:
   version "2.0.1"
   resolved "https://mirrors.cloud.tencent.com/npm/dom-scroll-into-view/-/dom-scroll-into-view-2.0.1.tgz#0decc8522801fd8d3f1c6ba355a74d382c5f989b"
   integrity sha512-bvVTQe1lfaUr1oFzZX80ce9KLDlZ3iU+XGNE/bz9HnGdklTieqsbmsLHe+rT2XWqopvL0PckkYqN7ksmm5pe3w==
+
+echarts@^5.4.0:
+  version "5.4.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/echarts/-/echarts-5.4.0.tgz#a9a8e5367293a397408d3bf3e2638b869249ce04"
+  integrity sha512-uPsO9VRUIKAdFOoH3B0aNg7NRVdN7aM39/OjovjO9MwmWsAkfGyeXJhK+dbRi51iDrQWliXV60/XwLA7kg3z0w==
+  dependencies:
+    tslib "2.3.0"
+    zrender "5.4.0"
 
 errno@^0.1.1:
   version "0.1.8"
@@ -855,6 +868,11 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
+tslib@2.3.0:
+  version "2.3.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
+  integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
+
 tslib@^2.3.0:
   version "2.4.1"
   resolved "https://mirrors.cloud.tencent.com/npm/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
@@ -898,6 +916,13 @@ vite@^3.2.3:
   optionalDependencies:
     fsevents "~2.3.2"
 
+vue-router@4:
+  version "4.1.6"
+  resolved "https://mirrors.cloud.tencent.com/npm/vue-router/-/vue-router-4.1.6.tgz#b70303737e12b4814578d21d68d21618469375a1"
+  integrity sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==
+  dependencies:
+    "@vue/devtools-api" "^6.4.5"
+
 vue-types@^3.0.0:
   version "3.0.2"
   resolved "https://mirrors.cloud.tencent.com/npm/vue-types/-/vue-types-3.0.2.tgz#ec16e05d412c038262fc1efa4ceb9647e7fb601d"
@@ -932,3 +957,10 @@ webpack-virtual-modules@^0.4.5:
   version "0.4.6"
   resolved "https://mirrors.cloud.tencent.com/npm/webpack-virtual-modules/-/webpack-virtual-modules-0.4.6.tgz#3e4008230731f1db078d9cb6f68baf8571182b45"
   integrity sha512-5tyDlKLqPfMqjT3Q9TAqf2YqjwmnUleZwzJi1A5qXnlBCdj2AtOJ6wAWdglTIDOPgOiOrXeBeFcsQ8+aGQ6QbA==
+
+zrender@5.4.0:
+  version "5.4.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/zrender/-/zrender-5.4.0.tgz#d4f76e527b2e3bbd7add2bdaf27a16af85785576"
+  integrity sha512-rOS09Z2HSVGFs2dn/TuYk5BlCaZcVe8UDLLjj1ySYF828LATKKdxuakSZMvrDz54yiKPDYVfjdKqcX8Jky3BIA==
+  dependencies:
+    tslib "2.3.0"
