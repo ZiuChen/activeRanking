@@ -20,7 +20,9 @@ export default defineConfig({
   // css
   css: {
     preprocessorOptions: {
-      less: {}
+      less: {
+        javascriptEnabled: true
+      }
     }
   },
   // proxy

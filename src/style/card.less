@@ -11,11 +11,11 @@
   height: 250px;
   // 边框
   border-radius: 4%;
-  border-color: #d9d9d9;
+  border-color: @border-color-base;
   border-width: 1px;
   border-style: solid;
   // 背景色
-  background-color: @bg-color;
+  background-color: @component-background;
   box-shadow: 0px 0px 3px 0px rgb(0 0 0 / 20%);
   // 子元素圆角
   overflow: hidden;
@@ -46,7 +46,8 @@
       font-size: 15px;
       font-weight: bolder;
       padding: 10px 10px 5px 10px;
-      background-color: @bg-color;
+      color: @text-color;
+      background-color: @component-background;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -66,7 +67,7 @@
         border-radius: 50%;
         border-style: solid;
         border-width: 1px;
-        border-color: #ffffff;
+        border-color: @border-color-base;
         margin: 5px;
         cursor: pointer;
       }
@@ -103,7 +104,7 @@
             }
             &-span {
               font-size: 10px;
-              color: @text-color-lighter;
+              color: @text-color-secondary;
               &:hover {
                 color: @primary-color !important;
               }
