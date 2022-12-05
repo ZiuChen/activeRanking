@@ -110,36 +110,4 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
 
 <style lang="less" scoped>
 @import '../style/card.less';
-.stat {
-  position: absolute;
-  top: 127px;
-  width: 94%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  z-index: 1;
-  color: #fff;
-  background-image: linear-gradient(360deg, black, transparent);
-
-  font-size: 13px;
-  .left {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .counter {
-    display: flex;
-    align-items: center;
-    margin-left: 2px;
-    padding: 2px 5px;
-    &-icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 2px;
-    }
-  }
-}
 </style>

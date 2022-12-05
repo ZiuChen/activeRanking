@@ -23,6 +23,7 @@
   user-select: none;
   // 统一鼠标指针样式
   cursor: default;
+  /* 封面 */
   .cover {
     width: 100%;
     min-height: 150px;
@@ -35,6 +36,7 @@
       transform: scale(1.1);
     }
   }
+  /* 内容 */
   .content {
     display: flex;
     flex-direction: column;
@@ -96,24 +98,54 @@
           }
           .counter {
             display: flex;
-            align-items: center;
+            align-items: flex-end;
+            margin-right: 8px;
             &-icon {
               width: 20px;
               height: 20px;
-              margin-right: 2px;
+              margin-right: 1px;
             }
             &-span {
-              font-size: 10px;
+              font-size: 12px;
               color: @text-color-secondary;
-              &:hover {
-                color: @primary-color !important;
-              }
             }
           }
           .chart {
             .counter(); // 复用counter样式
           }
         }
+      }
+    }
+  }
+  /* video-card 状态栏 */
+  .stat {
+    position: absolute;
+    top: 124px;
+    width: 248px;
+    padding-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    color: #fff;
+    background-image: linear-gradient(360deg, black, transparent);
+    font-size: 13px;
+    cursor: pointer;
+    pointer-events: none; // 穿透当前层
+    .left {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .counter {
+      display: flex;
+      align-items: center;
+      margin-left: 2px;
+      padding: 2px 5px;
+      &-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 2px;
       }
     }
   }
