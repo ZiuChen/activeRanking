@@ -4,6 +4,7 @@ import { Spin } from 'ant-design-vue'
 import useEcharts from '@/hooks/useEcharts'
 import useModal from '@/hooks/useModal'
 import useExternalLink from '@/hooks/useExternalLink'
+import useRankInfo from '@/hooks/useRankInfo'
 
 const props = defineProps({
   roomData: {
@@ -28,16 +29,7 @@ const coverLink = computed(() => {
   return props.showFrame ? system_cover : cover
 })
 
-const rankColorMap = {
-  0: 'red',
-  1: 'volcano',
-  2: 'purple'
-}
-
-const rankInfo = computed(() => ({
-  text: `${props.rank + 1}`,
-  color: rankColorMap[props.rank] !== undefined ? rankColorMap[props.rank] : 'grey'
-}))
+const rankInfo = useRankInfo(props)
 
 const fetchChartData = async () => {
   return fetch('api/history/' + props.roomData.roomid).then((res) => res.json())
@@ -85,7 +77,7 @@ const handleChartClick = async () => {
   <div class="card">
     <img
       class="cover"
-      src="../assets/loading.svg"
+      src="../assets/image.svg"
       v-lazy="coverLink"
       :title="roomData.title"
       @click="handleExternalLinkClick({ type: 'rid', id: roomData.roomid })"
@@ -102,7 +94,7 @@ const handleChartClick = async () => {
       <div class="info">
         <img
           class="face"
-          src="../assets/loading.svg"
+          src="../assets/image.svg"
           v-lazy="roomData.face"
           :title="roomData.uname"
           @click="handleExternalLinkClick({ type: 'uid', id: roomData.uid })"

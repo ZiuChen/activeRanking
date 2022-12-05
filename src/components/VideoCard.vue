@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import formatSeconds from '@/utils/formatSeconds'
 import useExternalLink from '@/hooks/useExternalLink'
+import useRankInfo from '@/hooks/useRankInfo'
 
 const props = defineProps({
   videoData: {
@@ -16,21 +17,7 @@ const props = defineProps({
 
 const [_, handleExternalLinkClick] = useExternalLink()
 
-const coverLink = computed(() => {
-  const { pic } = props.videoData
-  return pic
-})
-
-const rankColorMap = {
-  0: 'red',
-  1: 'volcano',
-  2: 'purple'
-}
-
-const rankInfo = computed(() => ({
-  text: `${props.rank + 1}`,
-  color: rankColorMap[props.rank] !== undefined ? rankColorMap[props.rank] : 'grey'
-}))
+const rankInfo = useRankInfo(props)
 
 const formattedDuration = computed(() => formatSeconds(props.videoData.duration))
 </script>
@@ -45,8 +32,8 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
   <div class="card">
     <img
       class="cover"
-      src="../assets/loading.svg"
-      v-lazy="coverLink"
+      src="../assets/image.svg"
+      v-lazy="props.videoData.pic"
       :title="videoData.title"
       alt="cover"
       @click="handleExternalLinkClick({ type: 'bvid', id: videoData.bvid })"
@@ -81,7 +68,7 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
       <div class="info">
         <img
           class="face"
-          src="../assets/loading.svg"
+          src="../assets/image.svg"
           v-lazy="videoData.owner.face"
           :title="videoData.uname"
           alt="face"
