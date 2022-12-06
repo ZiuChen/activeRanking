@@ -72,7 +72,9 @@ const handleSortTypeChange = async () => {
   intervalTimer.value = null
 
   const key = sortType.value ? sortMap[0].id : sortMap[1].id
-  await fetchData(key).then(() => (isLoading.value = false))
+  await fetchData(key)
+    .then(() => (isLoading.value = false))
+    .then(() => message.success(`已切换至${sortType.value ? sortMap[0].name : sortMap[1].name}`))
 
   intervalTimer.value = setInterval(async () => {
     await fetchData(key)
