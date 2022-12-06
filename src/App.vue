@@ -11,6 +11,9 @@
           </a-menu-item>
         </template>
       </a-menu>
+      <a href="https://github.com/XiaoMiku01/vup.loveava.top/issues" target="_blank">
+        <img src="./assets/github.svg" alt="Github" style="height: 25px; width: 25px" />
+      </a>
     </template>
   </a-page-header>
   <div class="main">
@@ -21,7 +24,6 @@
     </router-view>
   </div>
   <a-layout-footer class="footer" style="text-align: center">
-    <a-tag>技术支持</a-tag>
     <a href="https://github.com/ZiuChen">
       <img
         src="https://img.shields.io/github/stars/ZiuChen?label=ZiuChen&logo=Github"
