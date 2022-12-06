@@ -1,18 +1,20 @@
 <template>
   <div class="ranking">
-    <div v-if="!isLoading" class="ranking-operation">
-      <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
-      <span>
-        <a-button size="small" style="cursor: pointer" @click="handleSortTypeChange">{{
-          sortType ? sortMap[0].name : sortMap[1].name
-        }}</a-button>
-      </span>
-      <span>
-        <a-button size="small" style="cursor: pointer" @click="handleShowFrameChange">{{
-          showFrame ? '关键帧' : '封面图'
-        }}</a-button>
-      </span>
-    </div>
+    <Teleport to="#extra-operation">
+      <div class="ranking-operation" v-show="cPage.key === 'ranking'">
+        <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
+        <span>
+          <a-button size="small" style="cursor: pointer" @click="handleSortTypeChange">{{
+            sortType ? sortMap[0].name : sortMap[1].name
+          }}</a-button>
+        </span>
+        <span>
+          <a-button size="small" style="cursor: pointer" @click="handleShowFrameChange">{{
+            showFrame ? '关键帧' : '封面图'
+          }}</a-button>
+        </span>
+      </div>
+    </Teleport>
     <div class="ranking-table">
       <a-spin v-if="isLoading" :spinning="isLoading" />
       <a-row v-else justify="center" :gutter="[15, 15]">
@@ -25,11 +27,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, inject, onMounted } from 'vue'
 import useMessage from '@/hooks/useMessage'
 import LiveCard from '@/components/LiveCard.vue'
 
 const message = useMessage()
+const cPage = inject('cPage')
 
 const roomList = ref([])
 const lastUpdateTime = ref('')

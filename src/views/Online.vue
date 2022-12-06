@@ -1,5 +1,15 @@
 <template>
   <div class="online">
+    <Teleport to="#extra-operation">
+      <div class="online-operation" v-show="cPage.key === 'online'">
+        <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
+        <span>
+          <a-button size="small" style="cursor: pointer" @click="handleSortTypeChange">{{
+            sortType ? sortMap[0].name : sortMap[1].name
+          }}</a-button>
+        </span>
+      </div>
+    </Teleport>
     <div class="online-table">
       <a-spin v-if="isLoading" :spinning="isLoading" />
       <a-row v-else justify="center" :gutter="[15, 15]">
@@ -12,18 +22,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import useMessage from '@/hooks/useMessage'
 import VideoCard from '@/components/VideoCard.vue'
 
 const message = useMessage()
+const cPage = inject('cPage')
 
 const list = ref([])
 const lastUpdateTime = ref('')
 const isLoading = ref(true)
+const intervalTimer = ref(null)
 
-const fetchData = async () => {
-  return fetch('api/as/rank?by=online')
+const fetchData = async (type = 'online') => {
+  return fetch('api/as/rank?by=' + type)
     .then((res) => res.json())
     .then((res) => {
       res.data.list.forEach((item) => {
@@ -37,10 +49,40 @@ const fetchData = async () => {
     })
 }
 
+const sortType = ref(true)
+const sortMap = {
+  0: {
+    id: 'online',
+    name: '在线人数'
+  },
+  1: {
+    id: 'pubdate',
+    name: '投稿时间'
+  }
+}
+const handleSortTypeChange = async () => {
+  sortType.value = !sortType.value
+  isLoading.value = true
+
+  // 1. 清理定时器
+  // 2. 更新当前数据
+  // 3. 重新设置interval
+
+  clearInterval(intervalTimer.value)
+  intervalTimer.value = null
+
+  const key = sortType.value ? sortMap[0].id : sortMap[1].id
+  await fetchData(key).then(() => (isLoading.value = false))
+
+  intervalTimer.value = setInterval(async () => {
+    await fetchData(key)
+  }, 10000)
+}
+
 onMounted(async () => {
   await fetchData().then(() => (isLoading.value = false))
   // 每10000ms更新数据
-  setInterval(async () => {
+  intervalTimer.value = setInterval(async () => {
     await fetchData()
   }, 10000)
 })

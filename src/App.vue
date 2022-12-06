@@ -3,6 +3,7 @@
 
   <a-page-header :ghost="false" style="width: 100%" :title="cPage.title" :sub-title="cPage.desc">
     <template #extra>
+      <div id="extra-operation"></div>
       <a-menu mode="horizontal">
         <template v-for="l of linkList" :key="l.key">
           <a-menu-item :class="{ 'ant-menu-item-selected': cPage.key === l.key }">
@@ -37,7 +38,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, provide } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -57,6 +58,8 @@ const linkList = [
 ]
 
 const cPage = computed(() => linkList.filter((l) => route.name === l.key)[0] || linkList[0])
+
+provide('cPage', cPage) // 将放到公共区域 供子组件注入 根据不同页面区分不同operation
 </script>
 
 <style lang="less">
