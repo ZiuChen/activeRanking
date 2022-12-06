@@ -1,7 +1,7 @@
 <template>
   <div class="online">
     <Teleport to="#extra-operation">
-      <div class="online-operation" v-show="cPage.key === 'online'">
+      <div class="online-operation" v-show="isLoading === false && cPage.key === 'online'">
         <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
         <span>
           <a-button size="small" style="cursor: pointer" @click="handleSortTypeChange">{{

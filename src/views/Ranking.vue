@@ -1,7 +1,7 @@
 <template>
   <div class="ranking">
     <Teleport to="#extra-operation">
-      <div class="ranking-operation" v-show="cPage.key === 'ranking'">
+      <div class="ranking-operation" v-show="isLoading === false && cPage.key === 'ranking'">
         <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
         <span>
           <a-button size="small" style="cursor: pointer" @click="handleSortTypeChange">{{
