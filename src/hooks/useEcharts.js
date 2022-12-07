@@ -33,19 +33,24 @@ const useEcharts = ({ id, title, subText, data }) => {
           saveAsImage: {}
         }
       },
-      xAxis: {
-        type: 'time',
-        boundaryGap: false,
-        axisPointer: {
-          snap: true
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          axisPointer: {
+            snap: true
+          },
+          data: data.map((item) => new Date(item[0]).toLocaleTimeString())
         }
-      },
-      yAxis: {
-        type: 'value',
-        axisTick: {
-          inside: true
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          axisTick: {
+            inside: true
+          }
         }
-      },
+      ],
       dataZoom: [
         {
           type: 'inside',
@@ -61,11 +66,26 @@ const useEcharts = ({ id, title, subText, data }) => {
         {
           name: '互动人数',
           type: 'line',
+          stack: 'Total',
+          emphasis: {
+            focus: 'series'
+          },
+          showSymbol: false,
           smooth: true,
-          symbol: 'circle',
-          symbolSize: 5,
           areaStyle: {},
-          data: data
+          data: data.map((item) => item[1])
+        },
+        {
+          name: 'B站高能榜',
+          type: 'line',
+          stack: 'Total',
+          emphasis: {
+            focus: 'series'
+          },
+          showSymbol: false,
+          smooth: true,
+          areaStyle: {},
+          data: data.map((item) => item[2] || 0)
         }
       ]
     }
