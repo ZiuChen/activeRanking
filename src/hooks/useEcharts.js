@@ -9,7 +9,7 @@ const useEcharts = ({ id, title, subText, data }) => {
         trigger: 'axis',
         backgroundColor: 'rgba(255, 255, 255, 0.8)',
         position: function (pt) {
-          return [pt[0], '10%']
+          return [pt[0] + 20, '20%']
         },
         feature: {
           dataZoom: {
@@ -64,7 +64,7 @@ const useEcharts = ({ id, title, subText, data }) => {
       ],
       series: [
         {
-          name: '互动人数',
+          name: '10分钟互动人数',
           type: 'line',
           stack: 'Total',
           emphasis: {
