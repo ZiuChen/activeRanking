@@ -20,7 +20,6 @@ export default class ZURequest {
     this.instance.interceptors.response.use(
       (res) => {
         const data = res.data
-        console.log(data.code)
         // 响应成功, 但是服务器返回错误码
         if (data.code !== 0) {
           message.error(data.msg)
