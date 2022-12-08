@@ -28,6 +28,7 @@
 
 <script setup>
 import { ref, inject, onMounted } from 'vue'
+import { requestRankList } from '@/service/ranking'
 import useMessage from '@/hooks/useMessage'
 import LiveCard from '@/components/LiveCard.vue'
 
@@ -51,19 +52,14 @@ const sortMap = {
 const sortType = ref(false)
 
 const fetchData = async () => {
-  return fetch('api/rank100')
-    .then((res) => res.json())
-    .then((res) => {
-      res.data.rooms.forEach((room) => {
-        room.face = room.face + '@55w_55h'
-      })
-      const key = sortType.value ? sortMap[0].id : sortMap[1].id
-      roomList.value = res.data.rooms.sort((a, b) => b[key] - a[key])
-      lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
+  return requestRankList().then((res) => {
+    res.data.rooms.forEach((room) => {
+      room.face = room.face + '@55w_55h'
     })
-    .catch(() => {
-      message.error('数据请求出错')
-    })
+    const key = sortType.value ? sortMap[0].id : sortMap[1].id
+    roomList.value = res.data.rooms.sort((a, b) => b[key] - a[key])
+    lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
+  })
 }
 
 const handleSortTypeChange = () => {

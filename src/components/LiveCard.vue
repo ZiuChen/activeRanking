@@ -64,6 +64,7 @@
 <script setup>
 import { computed, h } from 'vue'
 import { Spin } from 'ant-design-vue'
+import { requestRoomHistory } from '@/service/ranking'
 import useEcharts from '@/hooks/useEcharts'
 import useModal from '@/hooks/useModal'
 import useExternalLink from '@/hooks/useExternalLink'
@@ -95,7 +96,7 @@ const coverLink = computed(() => {
 const rankInfo = useRankInfo(props)
 
 const fetchChartData = async () => {
-  return fetch('api/history/' + props.roomData.roomid).then((res) => res.json())
+  return requestRoomHistory(props.roomData.roomid).then((res) => res.data)
 }
 
 const handleChartClick = async () => {

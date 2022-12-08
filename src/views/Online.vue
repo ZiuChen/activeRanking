@@ -23,6 +23,7 @@
 
 <script setup>
 import { ref, onMounted, inject } from 'vue'
+import { requestOnlineList } from '@/service/online'
 import useMessage from '@/hooks/useMessage'
 import VideoCard from '@/components/VideoCard.vue'
 
@@ -34,20 +35,13 @@ const lastUpdateTime = ref('')
 const isLoading = ref(true)
 const intervalTimer = ref(null)
 
-const fetchData = async (type = 'online') => {
-  return fetch('api/as/rank?by=' + type)
-    .then((res) => res.json())
-    .then((res) => {
-      res.data.list.forEach((item) => {
-        item.owner.face = item.owner.face + '@55w_55h'
-      })
-      list.value = res.data.list
-      lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
-    })
-    .catch(() => {
-      message.error('数据请求出错')
-    })
-}
+const fetchData = requestOnlineList((type = 'online')).then((res) => {
+  res.data.list.forEach((item) => {
+    item.owner.face = item.owner.face + '@55w_55h'
+  })
+  list.value = res.data.list
+  lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
+})
 
 const sortType = ref(true)
 const sortMap = {
