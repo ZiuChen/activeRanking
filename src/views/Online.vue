@@ -35,13 +35,15 @@ const lastUpdateTime = ref('')
 const isLoading = ref(true)
 const intervalTimer = ref(null)
 
-const fetchData = requestOnlineList((type = 'online')).then((res) => {
-  res.data.list.forEach((item) => {
-    item.owner.face = item.owner.face + '@55w_55h'
+const fetchData = async (type = 'online') => {
+  return requestOnlineList(type).then((res) => {
+    res.data.list.forEach((item) => {
+      item.owner.face = item.owner.face + '@55w_55h'
+    })
+    list.value = res.data.list
+    lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
   })
-  list.value = res.data.list
-  lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
-})
+}
 
 const sortType = ref(true)
 const sortMap = {
