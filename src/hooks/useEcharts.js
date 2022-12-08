@@ -19,6 +19,10 @@ const useEcharts = ({ id, title, subText, data }) => {
         },
         extraCssText: 'width: 170px'
       },
+      legend: {
+        data: ['10分钟互动人数', 'B站高能榜'],
+        left: 10
+      },
       title: {
         left: 'center',
         text: title || '',

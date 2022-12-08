@@ -5,6 +5,7 @@ import {
   TitleComponent,
   ToolboxComponent,
   TooltipComponent,
+  LegendComponent,
   GridComponent,
   DataZoomComponent
 } from 'echarts/components'
@@ -28,6 +29,7 @@ echarts.use([
   ToolboxComponent,
   TooltipComponent,
   GridComponent,
+  LegendComponent,
   DataZoomComponent,
   LineChart,
   CanvasRenderer,
