@@ -70,7 +70,7 @@ const useEcharts = ({ id, title, subText, data }) => {
         {
           name: '10分钟互动人数',
           type: 'line',
-          stack: 'Total',
+          stack: 'active',
           emphasis: {
             focus: 'series'
           },
@@ -82,7 +82,7 @@ const useEcharts = ({ id, title, subText, data }) => {
         {
           name: 'B站高能榜',
           type: 'line',
-          stack: 'Total',
+          stack: 'rank',
           emphasis: {
             focus: 'series'
           },
