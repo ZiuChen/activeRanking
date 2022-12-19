@@ -71,24 +71,16 @@ const useEcharts = ({ id, title, subText, data }) => {
           name: '10分钟互动人数',
           type: 'line',
           stack: 'active',
-          emphasis: {
-            focus: 'series'
-          },
           showSymbol: false,
           smooth: true,
-          areaStyle: {},
           data: data.map((item) => item[1])
         },
         {
           name: 'B站高能榜',
           type: 'line',
           stack: 'rank',
-          emphasis: {
-            focus: 'series'
-          },
           showSymbol: false,
           smooth: true,
-          areaStyle: {},
           data: data.map((item) => item[2] || 0)
         }
       ]
