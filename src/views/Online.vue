@@ -87,5 +87,20 @@ onMounted(async () => {
 </script>
 
 <style lang="less" scoped>
-@import '../style/online.less';
+.online-operation {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  & > * {
+    margin: 5px;
+  }
+}
+
+.online {
+  &-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 </style>

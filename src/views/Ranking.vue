@@ -86,5 +86,18 @@ const handleShowFrameChange = () => {
 </script>
 
 <style lang="less" scoped>
-@import '../style/ranking.less';
+.ranking-operation {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  & > * {
+    margin: 5px;
+  }
+}
+
+.ranking-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

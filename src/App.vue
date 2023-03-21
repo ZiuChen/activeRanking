@@ -65,5 +65,42 @@ provide('cPage', cPage) // 将放到公共区域 供子组件注入 根据不同
 </script>
 
 <style lang="less">
-@import './style/app.less';
+@import 'ant-design-vue/dist/antd.less';
+
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  // 避开header
+  padding-top: 125px;
+}
+.ant-page-header {
+  position: fixed;
+  top: 0px;
+  z-index: 2;
+  backdrop-filter: saturate(50%) blur(8px);
+  background: rgba(255, 255, 255, 0.7);
+  .ant-page-header-heading {
+    .ant-page-header-heading-extra {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      // 移除底部默认的边框
+      .ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light {
+        border: 0;
+        background: transparent;
+        height: 100%;
+      }
+    }
+  }
+}
+.footer {
+  background-color: @component-background;
+  & * {
+    margin: 0px 2px;
+  }
+}
 </style>
