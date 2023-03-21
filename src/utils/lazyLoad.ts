@@ -1,12 +1,10 @@
-/**
- * 懒加载
- * @description 可加载`<img>`、`<video>`、`<audio>`等一些引用资源路径的标签
- * @param {object} params 传参对象
- * @param {string?} params.lazyAttr 自定义加载的属性（可选）
- * @param {"src"|"background"} params.loadType 加载的类型（默认为`src`）
- * @param {string?} params.errorPath 加载失败时显示的资源路径，仅在`loadType`设置为`src`中可用（可选）
- */
-function lazyLoad(params) {
+export interface LazyLoadParams {
+  lazyAttr?: string // 自定义加载的属性名
+  loadType?: 'src' | 'background' // 加载的类型
+  errorPath?: string // 加载失败时显示的资源路径 (仅在loadType为src时可用)
+}
+
+export default function lazyLoad(params: LazyLoadParams) {
   const attr = params?.lazyAttr || 'lazy'
   const type = params?.loadType || 'src'
 
@@ -21,11 +19,10 @@ function lazyLoad(params) {
 
   /**
    * 加载图片
-   * @param {HTMLImageElement} el 图片节点
    */
-  function loadImage(el) {
+  function loadImage(el: HTMLImageElement) {
     const cache = el.src // 缓存当前`src`加载失败时候用
-    el.src = el.getAttribute(attr)
+    el.src = el.getAttribute(attr)!
     el.onerror = function () {
       el.src = params.errorPath || cache
     }
@@ -33,9 +30,8 @@ function lazyLoad(params) {
 
   /**
    * 加载单个节点
-   * @param {HTMLElement} el
    */
-  function loadElement(el) {
+  function loadElement(el: HTMLImageElement) {
     switch (type) {
       case 'src':
         loadImage(el)
@@ -48,15 +44,11 @@ function lazyLoad(params) {
     observer.unobserve(el)
   }
 
-  /**
-   * 监听器
-   * [MDN说明](https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver)
-   */
   const observer = new IntersectionObserver(function (entries) {
     for (let i = 0; i < entries.length; i++) {
       const item = entries[i]
       if (item.isIntersecting) {
-        loadElement(item.target)
+        loadElement(item.target as HTMLImageElement)
       }
     }
   })
@@ -65,5 +57,3 @@ function lazyLoad(params) {
 
   return { observer, update }
 }
-
-export default lazyLoad

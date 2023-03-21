@@ -1,5 +1,4 @@
-<script setup>
-import { computed } from 'vue'
+<script lang="ts" setup>
 import formatSeconds from '@/utils/formatSeconds'
 import useExternalLink from '@/hooks/useExternalLink'
 import useRankInfo from '@/hooks/useRankInfo'
@@ -45,7 +44,7 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
             <img class="counter-icon" src="../assets/play-box-outline.svg" alt="icon" />
             <span class="counter-span">{{
               videoData.stat.view > 10000
-                ? parseFloat(videoData.stat.view / 10000).toFixed(1) + 'w'
+                ? Number(videoData.stat.view / 10000).toFixed(1) + 'w'
                 : videoData.stat.view
             }}</span>
           </div>
@@ -92,7 +91,7 @@ const formattedDuration = computed(() => formatSeconds(props.videoData.duration)
                 <img class="counter-icon" src="../assets/thumb-up.svg" alt="icon" />
                 <span class="counter-span">{{
                   videoData.stat.like > 10000
-                    ? parseFloat(videoData.stat.like / 10000).toFixed(1) + 'w'
+                    ? Number(videoData.stat.like / 10000).toFixed(1) + 'w'
                     : videoData.stat.like
                 }}</span>
               </div>

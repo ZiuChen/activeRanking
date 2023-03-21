@@ -21,31 +21,12 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, inject } from 'vue'
+<script lang="ts" setup>
+import { Response, VideoData, VideoItem } from '@/types'
 import { requestOnlineList } from '@/service/online'
 import useMessage from '@/hooks/useMessage'
 import VideoCard from '@/components/VideoCard.vue'
 
-const message = useMessage()
-const cPage = inject('cPage')
-
-const list = ref([])
-const lastUpdateTime = ref('')
-const isLoading = ref(true)
-const intervalTimer = ref(null)
-
-const fetchData = async (type = 'online') => {
-  return requestOnlineList(type).then((res) => {
-    res.data.list.forEach((item) => {
-      item.owner.face = item.owner.face + '@55w_55h'
-    })
-    list.value = res.data.list
-    lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
-  })
-}
-
-const sortType = ref(true)
 const sortMap = {
   0: {
     id: 'online',
@@ -56,34 +37,50 @@ const sortMap = {
     name: '投稿时间'
   }
 }
-const handleSortTypeChange = async () => {
+
+const list = ref<VideoItem[]>([])
+const lastUpdateTime = ref('')
+const isLoading = ref(true)
+const sortType = ref(true)
+const cPage = inject<any>('cPage')
+let timer: number | null = null
+
+const message = useMessage()
+
+onMounted(() => {
+  fetchData().then(() => (isLoading.value = false))
+  // 每10000ms更新数据
+  timer = setInterval(() => {
+    fetchData()
+  }, 10000)
+})
+
+async function fetchData(type = 'online') {
+  return requestOnlineList(type).then((res: Response<VideoData>) => {
+    res.data.list.forEach((item) => {
+      item.owner.face = item.owner.face + '@55w_55h'
+    })
+    list.value = res.data.list
+    lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
+  })
+}
+
+async function handleSortTypeChange() {
   sortType.value = !sortType.value
   isLoading.value = true
 
-  // 1. 清理定时器
-  // 2. 更新当前数据
-  // 3. 重新设置interval
-
-  clearInterval(intervalTimer.value)
-  intervalTimer.value = null
+  if (timer) clearInterval(timer)
+  timer = null
 
   const key = sortType.value ? sortMap[0].id : sortMap[1].id
   await fetchData(key)
     .then(() => (isLoading.value = false))
     .then(() => message.success(`已切换至${sortType.value ? sortMap[0].name : sortMap[1].name}`))
 
-  intervalTimer.value = setInterval(async () => {
+  timer = setInterval(async () => {
     await fetchData(key)
   }, 10000)
 }
-
-onMounted(async () => {
-  await fetchData().then(() => (isLoading.value = false))
-  // 每10000ms更新数据
-  intervalTimer.value = setInterval(async () => {
-    await fetchData()
-  }, 10000)
-})
 </script>
 
 <style lang="less" scoped>

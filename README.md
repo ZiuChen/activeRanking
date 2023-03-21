@@ -1,6 +1,8 @@
-## vup.loveava.top 前端
+## 虚拟区互动人数排行 前端
 
-技术栈 Vite + Vue3 + Vue-Router + AntDesign + ECharts + Axios + Less
+> vup.loveava.top
+
+Vite + TS + Vue3
 
 ```sh
 pnpm i

@@ -1,4 +1,6 @@
-function formatSeconds(value) {
+// @ts-nocheck
+
+function formatSeconds(value: string) {
   //  秒
   let second = parseInt(value)
   //  分

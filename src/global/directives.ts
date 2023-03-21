@@ -1,7 +1,7 @@
+import { App } from 'vue'
 import lazyLoad from '@/utils/lazyLoad'
 
-const directives = (app) => {
-  /** 添加一个加载`src`的指令 */
+const directives = (app: App) => {
   const lazySrc = lazyLoad({
     lazyAttr: 'lazy'
   })
@@ -12,7 +12,7 @@ const directives = (app) => {
       lazySrc.observer.observe(el)
     },
     beforeUpdate(el, binding, vnode, prevVnode) {
-      if (binding.value !== prevVnode.value) {
+      if (binding.value !== prevVnode) {
         el.setAttribute('lazy', binding.value)
         lazySrc.observer.observe(el)
       }

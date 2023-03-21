@@ -6,7 +6,7 @@ const message = useMessage()
 export default class ZURequest {
   instance
   interceptors
-  constructor(config) {
+  constructor(config: any) {
     this.instance = axios.create(config)
     this.interceptors = config.interceptors
     this.instance.interceptors.request.use(
@@ -33,7 +33,7 @@ export default class ZURequest {
       }
     )
   }
-  request(config) {
+  request(config: any) {
     return new Promise((resolve, reject) => {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors?.requestInterceptor(config)
@@ -53,16 +53,16 @@ export default class ZURequest {
         })
     })
   }
-  get(config) {
+  get(config: any) {
     return this.request({ ...config, method: 'GET' })
   }
-  post(config) {
+  post(config: any) {
     return this.request({ ...config, method: 'POST' })
   }
-  delete(config) {
+  delete(config: any) {
     return this.request({ ...config, method: 'DELETE' })
   }
-  patch(config) {
+  patch(config: any) {
     return this.request({ ...config, method: 'PATCH' })
   }
 }

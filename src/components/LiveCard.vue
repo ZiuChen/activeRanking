@@ -61,8 +61,7 @@
   </div>
 </template>
 
-<script setup>
-import { computed, h } from 'vue'
+<script lang="ts" setup>
 import { Spin } from 'ant-design-vue'
 import { requestRoomHistory } from '@/service/ranking'
 import useEcharts from '@/hooks/useEcharts'
@@ -96,7 +95,7 @@ const coverLink = computed(() => {
 const rankInfo = useRankInfo(props)
 
 const fetchChartData = async () => {
-  return requestRoomHistory(props.roomData.roomid).then((res) => res.data)
+  return requestRoomHistory(props.roomData.roomid).then((res: any) => res.data)
 }
 
 const handleChartClick = async () => {
@@ -108,6 +107,7 @@ const handleChartClick = async () => {
       { style: 'display: flex; justify-content: center; align-items: center; height: 300px' },
       h(Spin, { spinning: true, tip: '我知道你很急, 但你先别急' })
     ),
+    // @ts-ignore
     okButtonProps: { style: 'display: none' }, // 隐藏footer按钮
     width: '85%',
     closable: true,
@@ -116,7 +116,7 @@ const handleChartClick = async () => {
   })
 
   const data = await fetchChartData()
-  data.map((info) => (info[0] *= 1000)) // 秒时间戳 转 毫秒时间戳
+  data.map((info: number[]) => (info[0] *= 1000)) // 秒时间戳 转 毫秒时间戳
 
   const echarts = useEcharts({
     id: 'interactive-history-chart',

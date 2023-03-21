@@ -1,5 +1,5 @@
-<script setup>
-import { onMounted } from 'vue'
+<script lang="ts" setup>
+// @ts-nocheck
 import * as echarts from 'echarts/core'
 import {
   TitleComponent,

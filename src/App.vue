@@ -39,10 +39,7 @@
   </a-layout-footer>
 </template>
 
-<script setup>
-import { computed, provide } from 'vue'
-import { useRoute } from 'vue-router'
-
+<script lang="ts" setup>
 const route = useRoute()
 const linkList = [
   {
