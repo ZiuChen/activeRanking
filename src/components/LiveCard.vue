@@ -92,7 +92,7 @@ const coverLink = computed(() => {
   return props.showFrame ? system_cover : cover
 })
 
-const rankInfo = useRankInfo(props)
+const rankInfo = useRankInfo(props.rank)
 
 const fetchChartData = async () => {
   return requestRoomHistory(props.roomData.roomid).then((res: any) => res.data)

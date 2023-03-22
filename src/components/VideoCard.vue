@@ -16,7 +16,7 @@ const props = defineProps({
 
 const [_, handleExternalLinkClick] = useExternalLink()
 
-const rankInfo = useRankInfo(props)
+const rankInfo = useRankInfo(props.rank)
 
 const formattedDuration = computed(() => formatSeconds(props.videoData.duration))
 </script>

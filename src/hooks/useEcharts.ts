@@ -1,14 +1,21 @@
 import { h } from 'vue'
 import ECharts from '@/components/ECharts.vue'
 
-const useEcharts = ({ id, title, subText, data }) => {
+interface EchartsOption {
+  id: string
+  title: string
+  subText: string
+  data: number[][]
+}
+
+const useEcharts = ({ id, title, subText, data }: EchartsOption) => {
   return h(ECharts, {
     eChartsId: id,
     eChartsOption: {
       tooltip: {
         trigger: 'axis',
         backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        position: function (pt) {
+        position: function (pt: any) {
           return [pt[0] + 20, '20%']
         },
         feature: {
