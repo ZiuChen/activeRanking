@@ -1,24 +1,30 @@
 <template>
   <div class="ranking">
     <Teleport to="#extra-operation">
-      <div class="ranking-operation" v-show="isLoading === false && cPage.key === 'ranking'">
-        <a-tag>最后更新时间: {{ lastUpdateTime }}</a-tag>
-        <span>
-          <a-button size="small" style="cursor: pointer" @click="handleSortTypeClick">{{
-            sortType ? sortMap[0].name : sortMap[1].name
-          }}</a-button>
-        </span>
-        <span>
-          <a-button size="small" style="cursor: pointer" @click="handleShowFrameChange">{{
-            showFrame ? '关键帧' : '封面图'
-          }}</a-button>
-        </span>
+      <div class="ranking-operation">
+        <a-tag>
+          {{ showOperation ? `最后更新时间: ${lastUpdateTime}` : '正在获取最新数据...' }}
+        </a-tag>
+        <a-button
+          v-show="showOperation"
+          size="small"
+          style="cursor: pointer"
+          @click="handleSortTypeClick"
+          >{{ sortTypeComputed.name }}</a-button
+        >
+        <a-button
+          v-show="showOperation"
+          size="small"
+          style="cursor: pointer"
+          @click="handleShowFrameChange"
+          >{{ showFrame ? '关键帧' : '封面图' }}</a-button
+        >
       </div>
     </Teleport>
     <div class="ranking-table">
-      <a-spin v-if="isLoading" :spinning="isLoading" />
-      <a-row v-else justify="center" :gutter="[15, 15]">
-        <a-col :span="4.8" v-for="(room, index) in roomList" :key="room.roomid">
+      <a-spin v-if="isLoading && !list.length" :spinning="isLoading" />
+      <a-row justify="center" :gutter="[15, 15]">
+        <a-col :span="4.8" v-for="(room, index) in list" :key="room.roomid">
           <LiveCard :roomData="room" :showFrame="showFrame" :rank="index"></LiveCard>
         </a-col>
       </a-row>
@@ -32,59 +38,85 @@ import { requestRankList } from '@/service/ranking'
 import useMessage from '@/hooks/useMessage'
 import LiveCard from '@/components/LiveCard.vue'
 
-const sortMap = {
-  0: {
+interface ISortItem {
+  id: 'count' | 'ten_minutes_counter'
+  name: string
+}
+
+const sortMap: ISortItem[] = [
+  {
     id: 'count',
     name: 'B站高能榜'
   },
-  1: {
+  {
     id: 'ten_minutes_counter',
     name: '10分钟互动人数'
   }
-}
+]
 
-const roomList = ref<Room[]>([])
+const list = ref<Room[]>([])
 const lastUpdateTime = ref('')
 const isLoading = ref(true)
 const sortType = ref(0)
+const sortTypeComputed = computed(() => (sortType.value ? sortMap[0] : sortMap[1]))
+const showOperation = computed(() => !isLoading.value && !!list.value.length)
 const showFrame = ref(false) // true: 关键帧 false: 封面图
-const cPage = inject<any>('cPage')
 const message = useMessage()
+let timer: number | null = null
 
-// 排序方式副作用
-watch(sortType, (val) => {
-  const key = val ? sortMap[0].id : sortMap[1].id
+watch(
+  sortTypeComputed,
+  async (type, prevType) => {
+    // 清除之前的定时器
+    if (timer) {
+      clearInterval(timer)
+      timer = null
+    }
 
-  // @ts-ignore
-  roomList.value = roomList.value.sort((a, b) => b[key] - a[key])
+    await fetchData()
 
-  message.success(`已切换至${sortMap[val ? 0 : 1].name}排序`)
-})
+    // 重新开启定时器
+    timer = setInterval(async () => {
+      await fetchData()
+    }, 10000)
 
-onMounted(() => {
-  fetchData().then(() => (isLoading.value = false))
-  // 每10000ms更新数据
-  setInterval(() => {
-    fetchData()
-  }, 10000)
-})
+    // !prevType 证明是第一次进入页面
+    if (prevType) message.success(`已切换至${type.name}排序`)
+  },
+  {
+    immediate: true
+  }
+)
 
 async function fetchData() {
-  return requestRankList().then((res: Response<RankData>) => {
-    res.data.rooms.forEach((room) => {
-      room.face = room.face + '@55w_55h'
-    })
+  isLoading.value = true
 
-    const key = sortType.value ? sortMap[0].id : sortMap[1].id
-    // @ts-ignore
-    roomList.value = res.data.rooms.sort((a, b) => b[key] - a[key])
-    lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleString()
-  })
+  return requestRankList()
+    .then((res: Response<RankData>) => {
+      // 添加图片后缀
+      res.data.rooms.forEach((room) => {
+        room.face = room.face + '@55w_55h'
+      })
+
+      // 更新最后更新时间
+      lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleTimeString()
+
+      return res.data.rooms
+    })
+    .then((data) => {
+      // 对数据进行排序并更新到视图
+      const key = sortTypeComputed.value.id
+      list.value = data.sort((a, b) => b[key] - a[key])
+
+      isLoading.value = false
+      return data
+    })
 }
 
 // 切换排序方式
 function handleSortTypeClick() {
   sortType.value = sortType.value ? 0 : 1
+  list.value.length = 0
 }
 
 function handleShowFrameChange() {
