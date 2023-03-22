@@ -1,8 +1,7 @@
 import zuRequest from './request'
-import { BASE_URL, TIME_OUT } from './request/config'
 
 export default new zuRequest({
-  baseURL: BASE_URL,
-  timeout: TIME_OUT,
+  baseURL: import.meta.env.VITE_REQUEST_BASE_URL,
+  timeout: import.meta.env.VITE_REQUEST_TIMEOUT,
   withCredentials: true
 })
