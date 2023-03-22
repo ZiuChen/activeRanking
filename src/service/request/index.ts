@@ -1,22 +1,33 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
+import { ZUInterceptors, ZURequestConfig, ZUAxiosRequestConfig } from './type'
 import useMessage from '@/hooks/useMessage'
 
 const message = useMessage()
 
 export default class ZURequest {
-  instance
-  interceptors
-  constructor(config: any) {
+  instance: AxiosInstance // axios实例
+  interceptors?: ZUInterceptors // 拦截器
+
+  constructor(config: ZUAxiosRequestConfig) {
     this.instance = axios.create(config)
+
+    // 如果传入拦截器, 则使用传入的拦截器, 否则使用默认的拦截器
     this.interceptors = config.interceptors
-    this.instance.interceptors.request.use(
-      this.interceptors?.requestInterceptor,
-      this.interceptors?.requestInterceptorCatch
-    )
-    this.instance.interceptors.response.use(
-      this.interceptors?.responseInterceptor,
-      this.interceptors?.responseInterceptorCatch
-    )
+
+    // 将默认的拦截器和传入的拦截器合并
+    // 将传入的拦截器放在默认拦截器之前, 以便传入的拦截器可以覆盖默认的拦截器
+    if (this.interceptors) {
+      this.instance.interceptors.request.use(
+        this.interceptors?.requestInterceptor,
+        this.interceptors?.requestInterceptorCatch
+      )
+      this.instance.interceptors.response.use(
+        this.interceptors?.responseInterceptor,
+        this.interceptors?.responseInterceptorCatch
+      )
+    }
+
+    // 添加默认的响应拦截器
     this.instance.interceptors.response.use(
       (res) => {
         const data = res.data
@@ -33,14 +44,19 @@ export default class ZURequest {
       }
     )
   }
-  request(config: any) {
+
+  request<T>(config: ZURequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
+      // 如果手动传入拦截器, 则使用手动传入的拦截器
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors?.requestInterceptor(config)
       }
+
+      // 调用实例方法发送请求 获取响应类型为T的数据
       this.instance
-        .request(config)
+        .request<any, T>(config)
         .then((res) => {
+          // 使用手动传入的拦截器对响应数据进行处理
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors?.responseInterceptor(res)
           }
@@ -53,16 +69,20 @@ export default class ZURequest {
         })
     })
   }
-  get(config: any) {
-    return this.request({ ...config, method: 'GET' })
+
+  get<T>(config: ZURequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'GET' })
   }
-  post(config: any) {
-    return this.request({ ...config, method: 'POST' })
+
+  post<T>(config: ZURequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'POST' })
   }
-  delete(config: any) {
-    return this.request({ ...config, method: 'DELETE' })
+
+  delete<T>(config: ZURequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'DELETE' })
   }
-  patch(config: any) {
-    return this.request({ ...config, method: 'PATCH' })
+
+  patch<T>(config: ZURequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
