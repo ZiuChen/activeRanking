@@ -32,16 +32,21 @@ import { requestOnlineList } from '@/service/online'
 import useMessage from '@/hooks/useMessage'
 import VideoCard from '@/components/VideoCard.vue'
 
-const sortMap = {
-  0: {
+interface ISortItem {
+  id: 'online' | 'pubdate'
+  name: string
+}
+
+const sortMap: ISortItem[] = [
+  {
     id: 'online',
     name: '在线人数'
   },
-  1: {
+  {
     id: 'pubdate',
     name: '投稿时间'
   }
-}
+]
 
 const list = ref<VideoItem[]>([])
 const lastUpdateTime = ref('')

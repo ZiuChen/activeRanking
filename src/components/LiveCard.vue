@@ -64,8 +64,6 @@
 <script lang="ts" setup>
 import { Spin } from 'ant-design-vue'
 import { requestRoomHistory } from '@/service/ranking'
-import useEcharts from '@/hooks/useEcharts'
-import useModal from '@/hooks/useModal'
 import useExternalLink from '@/hooks/useExternalLink'
 import useRankInfo from '@/hooks/useRankInfo'
 
@@ -84,7 +82,6 @@ const props = defineProps({
   }
 })
 
-const Modal = useModal()
 const [_, handleExternalLinkClick] = useExternalLink()
 
 const coverLink = computed(() => {
@@ -95,10 +92,13 @@ const coverLink = computed(() => {
 const rankInfo = useRankInfo(props.rank)
 
 const fetchChartData = async () => {
-  return requestRoomHistory(props.roomData.roomid).then((res: any) => res.data)
+  return requestRoomHistory(props.roomData.roomid).then((res) => res.data)
 }
 
 const handleChartClick = async () => {
+  const useModal = await import('@/hooks/useModal').then((module) => module.default)
+
+  const Modal = useModal()
   // 先展示Modal 后更新数据
   const modal = Modal.info({
     icon: h('li'),
@@ -117,6 +117,8 @@ const handleChartClick = async () => {
 
   const data = await fetchChartData()
   data.map((info: number[]) => (info[0] *= 1000)) // 秒时间戳 转 毫秒时间戳
+
+  const useEcharts = await import('@/hooks/useEcharts').then((module) => module.default)
 
   const echarts = useEcharts({
     id: 'interactive-history-chart',
