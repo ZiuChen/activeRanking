@@ -16,26 +16,30 @@
       </a>
     </template>
   </a-page-header>
+
   <div class="main">
     <router-view v-slot="{ Component }">
-      <keep-alive>
-        <component :is="Component"></component>
-      </keep-alive>
+      <component :is="Component"></component>
     </router-view>
   </div>
+
   <a-layout-footer class="footer" style="text-align: center">
-    <a href="https://github.com/ZiuChen">
-      <img
-        src="https://img.shields.io/github/stars/ZiuChen?label=ZiuChen&logo=Github"
-        alt="badge"
-      />
-    </a>
-    <a href="https://github.com/XiaoMiku01">
-      <img
-        src="https://img.shields.io/github/stars/XiaoMiku01?label=XiaoMiku01&logo=Github"
-        alt="badge"
-      />
-    </a>
+    <a-tooltip title="前端开发">
+      <a href="https://github.com/ZiuChen">
+        <img
+          src="https://img.shields.io/github/stars/ZiuChen?label=ZiuChen&logo=Github"
+          alt="badge"
+        />
+      </a>
+    </a-tooltip>
+    <a-tooltip title="后端开发">
+      <a href="https://github.com/XiaoMiku01">
+        <img
+          src="https://img.shields.io/github/stars/XiaoMiku01?label=XiaoMiku01&logo=Github"
+          alt="badge"
+        />
+      </a>
+    </a-tooltip>
   </a-layout-footer>
 </template>
 
@@ -57,29 +61,18 @@ const linkList = [
 ]
 
 const cPage = computed(() => linkList.filter((l) => route.name === l.key)[0] || linkList[0])
-
-provide('cPage', cPage) // 将放到公共区域 供子组件注入 根据不同页面区分不同operation
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import 'ant-design-vue/dist/antd.less';
 
-#app {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  // 避开header
-  padding-top: 125px;
-}
 .ant-page-header {
   position: fixed;
   top: 0px;
-  z-index: 2;
   backdrop-filter: saturate(50%) blur(8px);
   background: rgba(255, 255, 255, 0.7);
-  .ant-page-header-heading {
+  z-index: 2;
+  :deep(.ant-page-header-heading) {
     .ant-page-header-heading-extra {
       display: flex;
       justify-content: center;
@@ -94,6 +87,11 @@ provide('cPage', cPage) // 将放到公共区域 供子组件注入 根据不同
     }
   }
 }
+
+.main {
+  margin-top: 120px;
+}
+
 .footer {
   background-color: @component-background;
   & * {
