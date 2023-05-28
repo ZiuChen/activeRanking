@@ -95,9 +95,9 @@ async function fetchData() {
     .then((res: Response<RankData>) => {
       // 添加图片后缀
       res.data.rooms.forEach((room) => {
-        room.face = room.face + '@55w_55h'
+        room.face = room.face + '@55w_55h.webp'
+        room.cover = room.cover + '@150h.webp'
       })
-
       // 更新最后更新时间
       lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleTimeString()
 
