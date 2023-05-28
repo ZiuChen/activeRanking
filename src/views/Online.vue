@@ -93,7 +93,6 @@ async function fetchData(type = 'online') {
         item.owner.face = item.owner.face + '@55w_55h.webp'
         item.pic = item.pic.replace("http","https")
         item.pic = item.pic + '@150h.webp'
-        console.log(item)
       })
       // 更新时间
       lastUpdateTime.value = new Date(res.data.ctime * 1000).toLocaleTimeString()
